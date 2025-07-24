@@ -1,24 +1,28 @@
-import { BrowserRouter, Router, Routes } from "react-router"
-import NavBar from "./NavBar"
-import { Route } from "react-router"
-import Body from "./Body"
+import { BrowserRouter, Router, Routes } from "react-router";
+import { Route } from "react-router";
+import {Provider} from "react-redux";
+import Body from "./components/Body";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
+import Feed from "./components/Feed";
+import store from "./utils/store";
 
 function App() {
-
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={ <Body /> }>
-            <Route path="/login" element={ <div>Login page</div> } />
-            <Route path="/profile" element={ <div>profile page</div> } />
-          
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      {/* <NavBar /> */}
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Body />}>
+              <Route path="/" element={<Feed />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
