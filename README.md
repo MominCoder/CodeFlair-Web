@@ -1,12 +1,19 @@
-# React + Vite
+npm create vite@latest codeflair-frontend -- --template react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+remove intial code from app.jsx
+remve all css code from index.css
+remove app.css
+remove images form assets
 
-Currently, two official plugins are available:
+npm install tailwindcss @tailwindcss/vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Add the @tailwindcss/vite plugin to vite.config.js
 
-## Expanding the ESLint configuration
+Add an @import to index.css file that imports Tailwind CSS.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+npm i -D daisyui@latest
+
+@plugin "daisyui"; // add import for daisyUI in index.css file
+
+
+

@@ -1,8 +1,11 @@
 function App() {
 
   return (
+    
     <>
-      Hello world
+      <div className="navbar bg-base-100 shadow-sm">
+        <a className="btn btn-ghost text-xl">CodeFlair</a>
+      </div>
     </>
   )
 }
