@@ -8,20 +8,10 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("momin@gmail.com");
   const [password, setPassword] = useState("Momin@123");
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const userData = useSelector(store => store.user)
-
-  // useEffect(() => {
-  //   console.log('re render');
-  //   console.log(userData);
-
-  //   if (Object.keys(userData) > 0) {
-
-  //     navigate('/')
-  //   }
-  // })
 
   const handleLogin = async () => {
     try {
@@ -36,8 +26,8 @@ const Login = () => {
 
       dispatch(addUser(res.data));
       return navigate("/");
-    } catch (error) {
-      console.log(error);
+    } catch (err) {      
+      setError(err?.response?.data?.Error || "Something went wrong");
     }
   };
 
@@ -79,9 +69,7 @@ const Login = () => {
                   onChange={(e) => setEmailId(e.target.value)}
                 />
               </label>
-              <div className="validator-hint hidden">
-                Enter valid email address
-              </div>
+              {/* <div className="validator-hint hidden">{error}</div> */}
             </div>
 
             <div className="my-3">
@@ -113,16 +101,10 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Password"
-                  title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+                  title="Must be minimum 8 characters, including number, lowercase letter, uppercase letter and symbol"
                 />
               </label>
-              <p className="validator-hint hidden">
-                Must be more than 8 characters, including
-                <br />
-                At least one number <br />
-                At least one lowercase letter <br />
-                At least one uppercase letter
-              </p>
+              <div className="text-red-700 text-sm mt-1.5">{error}</div>
             </div>
           </div>
 
