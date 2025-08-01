@@ -12,7 +12,8 @@ const Profile = () => {
         </div>
       </div>
 
-      <p className="text-gray-600 text-xl font-semibold">{user.firstName}, {user.age}</p>
+      <p className="text-gray-600 text-xl font-semibold">{user.firstName} {user.lastName}</p>
+      <p className="text-gray-600 text-sm font-semibold">{user.age}, {user.gender}</p>
       <p className="text-gray-500 text-xs">{user.bio}</p>
 
       <div className="flex items-center justify-center mt-2">
