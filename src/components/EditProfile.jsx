@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Profile from "./Profile";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
