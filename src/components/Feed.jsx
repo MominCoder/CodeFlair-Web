@@ -30,8 +30,12 @@ const Feed = () => {
   }, []);
 
   return feed && (
-    <div className="flex items-center justify-center">
-      <UserCard user={feed[6]} />
+    <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+      {
+        feed.map(user => (
+          <UserCard key={user._id} user={user} />
+        ))
+      }
     </div>
   );
 };
