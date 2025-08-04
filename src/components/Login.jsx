@@ -6,9 +6,18 @@ import { useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("momin@gmail.com");
-  const [password, setPassword] = useState("Momin@123");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [bio, setBio] = useState("");
   const [error, setError] = useState("");
+
+  const [isLogin, setIsLogin] = useState(true);
+  const [showToast, setShowToast] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,24 +35,129 @@ const Login = () => {
 
       dispatch(addUser(res.data));
       return navigate("/");
-    } catch (err) {      
+    } catch (err) {
       setError(err?.response?.data?.Error || "Something went wrong");
     }
   };
 
+  const handleSignUp = async () => {
+    try {      
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, age, emailId, password, gender, bio },
+        { withCredentials: true }
+      );
+
+      dispatch(addUser(res.data));
+
+      setShowError(false);
+      setShowToast(true);
+
+      setTimeout(() => {
+        setShowToast(false);
+      }, 0);
+
+      return navigate("/profile");
+    } catch (err) {
+      console.log(err);
+      setError(true);
+      setShowToast(true);
+
+      setTimeout(() => {
+        setShowToast(false);
+      }, 0);
+    }
+  };
+
   return (
-    <div className="flex justify-center my-10">
-      <div className="card card-side bg-base-100 shadow-sm">
-        <figure>
+    <div className="my-10">
+      {showToast && (
+        <div className="toast toast-top toast-center">
+          {showError ? (
+            <div className="alert alert-error">
+              <span>Something went wrong</span>
+            </div>
+          ) : (
+            <div className="alert alert-info">
+              <span>User updated successfully.</span>
+            </div>
+          )}
+        </div>
+      )}
+      <div className="card card-side bg-base-100 shadow-sm max-w-3xl mx-auto">
+        <figure className="w-1/3">
           <img
             src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
             alt="Movie"
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title text-3xl">Login</h2>
+          <h2 className="card-title text-3xl">
+            {isLogin ? "Login" : "Sign up"}
+          </h2>
 
           <div>
+            {!isLogin && (
+              <>
+                <div className="my-3">
+                  <label className="input validator">
+                    <input
+                      type="text"
+                      value={firstName}
+                      placeholder="First name"
+                      required
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  </label>
+                </div>
+                <div className="my-3">
+                  <label className="input validator">
+                    <input
+                      type="text"
+                      value={lastName}
+                      placeholder="Last name"
+                      required
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </label>
+                </div>
+                <div className="my-3">
+                  <label className="input validator">
+                    <input
+                      type="number"
+                      value={age}
+                      placeholder="Age"
+                      required
+                      onChange={(e) => setAge(e.target.value)}
+                    />
+                  </label>
+                </div>
+                <div className="my-3">
+                  <select
+                    value={gender}
+                    name="gender"
+                    className="select select-sm"
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option>Select gender</option>
+                    <option value='male'>male</option>
+                    <option value='female'>female</option>
+                    <option value='others'>others</option>
+                  </select>
+                </div>
+                <div className="my-3">
+                  <label className="input validator">
+                    <input
+                      type="text"
+                      placeholder="About"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                    />
+                  </label>
+                </div>
+              </>
+            )}
+
             <div className="my-3">
               <label className="input validator">
                 <svg
@@ -66,6 +180,7 @@ const Login = () => {
                   type="email"
                   value={emailId}
                   required
+                  placeholder="Email"
                   onChange={(e) => setEmailId(e.target.value)}
                 />
               </label>
@@ -108,10 +223,23 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="card-actions">
-            <button className="btn btn-primary" onClick={handleLogin}>
-              Log In
+          <div className="card-actions flex flex-col">
+            <button
+              className="btn btn-primary"
+              onClick={isLogin ? handleLogin : handleSignUp}
+            >
+              {isLogin ? "Login" : "Sign up"}
             </button>
+
+            {isLogin ? (
+              <p>
+                Create a new account, <b className="cursor-pointer" onClick={() => setIsLogin(false)}>Sign up</b>
+              </p>
+            ) : (
+              <p>
+                Already a user, <b className="cursor-pointer" onClick={() => setIsLogin(true)}>Login</b>
+              </p>
+            )}
           </div>
         </div>
       </div>
