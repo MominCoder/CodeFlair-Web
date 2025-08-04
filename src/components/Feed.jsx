@@ -24,18 +24,22 @@ const Feed = () => {
       console.error("Error fetching feed:", err);
     }
   };
-
+  
   useEffect(() => {
     getFeed();
   }, []);
 
+  if(!feed) return;
+  if(feed.length <= 0) return (
+    <>
+    <h1 className="text-center text-3xl mt-6 mb-1">That's it!</h1>
+    <h2 className="text-center text-lg">No new users</h2>
+    </>
+  )
+
   return feed && (
-    <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-      {
-        feed.map(user => (
-          <UserCard key={user._id} user={user} />
-        ))
-      }
+    <div className="flex justify-center">
+      <UserCard user={feed[0]}/>
     </div>
   );
 };
