@@ -36,7 +36,7 @@ const UserCard = ({ user }) => {
         {bio && <p>{bio}</p>}
         {age && <p>Age: {age} years</p>}
         {gender && <p>{gender}</p>}
-        {skills.length > 0 && (
+        {skills?.length > 0 && (
           <ul>
             <h3>Pro at:</h3>
 
